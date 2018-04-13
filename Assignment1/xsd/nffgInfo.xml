@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE xml>
+<nffgService xmlns="http://www.example.org/nffgInfo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/1aa nffgInfo.xsd">
+        <nffg nffgName="nffg1" updateTime="2015-11-15T11:32:40.000+02:00">
+			<nodes>
+				<node nodeName="firewall1">
+					<fType>
+						<funcType>FW</funcType>
+					</fType>
+				</node>
+				
+				<node nodeName="firewall2">
+					<fType>
+						<funcType>FW</funcType>
+					</fType>
+				</node>
+				
+				<node nodeName="webServer1">
+					<fType>
+						<funcType>WEB_SERVER</funcType>
+					</fType>
+				</node>
+				
+				<node nodeName="mailServer1">
+					<fType>
+						<funcType>MAIL_SERVER"</funcType>
+					</fType>
+				</node>
+			</nodes>
+		</nffg>
+		
+		<nffg nffgName="nffg2">
+			<nodes>
+				<node nodeName="mailServer1">
+					<fType>
+						<funcType>MAIL_SERVER</funcType>
+					</fType>
+				</node>
+				
+				<node nodeName="NAT1">
+					<fType>
+						<funcType>NAT</funcType>
+					</fType>
+				</node>
+				
+				<node nodeName="firewall1">
+					<fType>
+						<funcType>FW</funcType>
+					</fType>
+				</node>
+				
+				<node nodeName="webServer2">
+					<fType>
+						<funcType>WEB_SERVER</funcType>
+					</fType>
+				</node>
+			</nodes>
+			
+			<links>
+				<link linkName="l12">
+               		<sourceNode>firewall1</sourceNode>
+                	<destNode>firewall2</destNode>
+           		</link>
+           		
+           		<link linkName="l13">
+               		<sourceNode>firewall1</sourceNode>
+                	<destNode>webServer1</destNode>
+           		</link>
+           		
+           		<link linkName="l21">
+               		<sourceNode>firewall2</sourceNode>
+                	<destNode>firewall1</destNode>
+           		</link>
+           		
+                <link linkName="l23">
+               		<sourceNode>firewall2</sourceNode>
+                	<destNode>NAT1</destNode>
+           		</link>
+           		
+                <link linkName="l13">
+               		<sourceNode>webServer1</sourceNode>
+                	<destNode>webServer1</destNode>
+           		</link>
+			</links>
+			
+			
+			<policies>
+				
+				<reachabilityPolicy policyName="policy1" relatedNffg="nffg0" isPositive="true">
+	            	<sourceNode>webServer1</sourceNode>
+                	<destNode>NAT1</destNode>
+                	<verificationResult>
+                		<result>true</result>
+                    	<verificationTime>2015-11-15T11:32:40.000+02:00</verificationTime>
+                   		<message>the result of policy verification is true</message>
+               		</verificationResult>
+				</reachabilityPolicy>
+				
+				<reachabilityPolicy policyName="policy2" relatedNffg="nffg0" isPositive="true">
+	            	<sourceNode>mailServer1</sourceNode>
+                	<destNode>webServer2</destNode>
+                	<verificationResult>
+                		<result>true</result>
+                    	<verificationTime>2015-11-15T11:32:40.000+02:00</verificationTime>
+                   		<message>the result of policy verification is true</message>
+               		</verificationResult>
+				</reachabilityPolicy>
+		
+				<traversalPolicy policyName="policy2" relatedNffg="nffg0" isPositive="true">
+	            	<sourceNode>mailServer1</sourceNode>
+                	<destNode>webServer2</destNode>
+                	<verificationResult>
+                		<result>true</result>
+                    	<verificationTime>2015-11-15T11:32:40.000+02:00</verificationTime>
+                   		<message>the result of policy verification is true</message>
+               		</verificationResult>
+                	<traversedFunc>NAT</traversedFunc>
+            	</traversalPolicy>
+            	
+            	<traversalPolicy policyName="policy1" relatedNffg="nffg0" isPositive="true">
+	            	<sourceNode>mailServer2</sourceNode>
+                	<destNode>webClient1</destNode>
+                	<verificationResult>
+                		<result>true</result>
+                    	<verificationTime>2015-11-15T11:32:40.000+02:00</verificationTime>
+                   		<message>the result of policy verification is true</message>
+               		</verificationResult>
+                	<traversedFunc>NAT</traversedFunc>
+                	<traversedFunc>FW</traversedFunc>
+                	<traversedFunc>DPI</traversedFunc>
+            	</traversalPolicy>
+            	
+			</policies>
+	
+		</nffg>
+
+</nffgService>
+		
+		
+		
+		
+		
+	

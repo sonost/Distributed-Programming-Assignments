@@ -1,0 +1,23 @@
+DTD:
+
+I considered nffgs as sub element of the root element nffgService because the main interface NffgVerifier gets informations about nffgs, and policies, but since each policy is related to a nffg,
+and so I put policies as sub element of nffg element. each nffg consists of policies, nodes and links.
+
+There are two kinds of policies, reachability and traversal, but traversal policy is optional because a policy can have no traversal policy.
+
+traversal policy can have numbers of traversed functions as it needs to get the traversed functions in the interface.
+
+ID is specified when the value must be unique within the whole document like nffg name and policy name.
+related nffg name inside the policy references the nffg name through an IDREF.
+source node and destination node in the reachability and traversal policies and links also reference the node through an IDREF.
+
+I specified IMPLIED when the value is optional, REQUIRED when it is mandatory.
+
+XSD:
+
+Schema enables to specify constraints on data formats better than DTD, so I specified the formats described in the specification like the nameType that should start with alphanumeric: [A-Za-z][A-Za-z0-9]*
+
+as mentioned above, in xsd ID is specified when the value must be unique within the whole document like nffg name and policy name.
+
+in each node there is a functional type which is an enumeration and I need to get the type for each node, also each traversal policy has a set of traversed functions.
+in order to reduce the redundancy and avoid defining two times the same enumeration list, an element ftype is defined.

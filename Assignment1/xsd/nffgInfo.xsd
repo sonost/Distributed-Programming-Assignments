@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/nffgInfo"
+xmlns:tns="http://www.example.org/nffgInfo" elementFormDefault="qualified">
+
+<element name="nffgService" type="tns:nffgServiceType">
+
+	<key name="nffgNameKey">
+		<selector xpath="tns:nffg" />
+		<field xpath="@nffgName" />
+	</key>
+	
+	<keyref name="nffgNameKeyRef" refer="tns:nffgNameKey">
+      <selector xpath="tns:nffg"></selector>
+      <field xpath="@relatedNffgName"></field>
+    </keyref>
+    
+    <key name="policyNameKey">
+		<selector xpath="tns:nffg/tns:policies/tns:policy" />
+		<field xpath="@policyName" />
+	</key>
+	
+</element>
+	
+
+<complexType name="nffgServiceType">
+    	<sequence>
+    		<element name="nffg" minOccurs="0" maxOccurs="unbounded" type="tns:nffgType">
+    			<key name="nodeNameKey">
+					<selector xpath="tns:nodes/tns:node" />
+			   		<field xpath="@nodeName" />
+				</key>
+				
+				<keyref name="nodeNameKeyRef" refer="tns:nodeNameKey">
+      				<selector xpath="tns:nodes/tns:node"></selector>
+      				<field xpath="@nodeName"></field>
+    			</keyref>
+				
+				<key name="linkNameKey">
+    				<selector xpath="tns:links/tns:link" />
+    				<field xpath="@linkName" />
+    			</key>
+    		</element>
+    	</sequence>
+</complexType>
+
+<complexType name="nffgType">
+    <sequence>
+		<element name="nodes" type="tns:nodesType"></element>
+  		<element name="links" type="tns:linksType"></element>
+ 		<element name="policies" minOccurs="1" maxOccurs="1" type="tns:policiesType"></element>
+    </sequence>
+    <attribute name="nffgName" use="required" type="tns:nameType"></attribute>
+    <attribute name="updateTime" use="required" type="dateTime"></attribute>
+</complexType>
+
+
+<complexType name="nodesType">
+    <sequence>
+    	<element name="node" minOccurs="1" maxOccurs="unbounded" type="tns:nodeType"></element>
+    </sequence>
+</complexType>
+
+
+<complexType name="nodeType">
+    <sequence>
+		<element name="fType" type="tns:fType"></element>
+    </sequence>
+    <attribute name="nodeName" use="required" type="tns:nameType"/>
+</complexType> 
+
+<complexType name="linksType">
+   	<sequence>
+   		<element name="link" minOccurs="1" maxOccurs="unbounded" type="tns:linkType"></element>
+   	</sequence>
+</complexType>
+
+<complexType name="linkType">
+    <sequence>
+    	<element name="sourceNode"  type="tns:nameType"></element>
+    	<element name="destNode"  type="tns:nameType"></element>
+    </sequence>
+    <attribute name="linkName" use="required" type="tns:nameType"/>
+</complexType>
+
+
+<simpleType name="nameType">
+	<restriction base="token">
+	   	<minLength value="1"></minLength>
+    	<pattern value="[A-Za-z][A-Za-z0-9]*"/>
+	</restriction>
+</simpleType>
+
+
+<complexType name="fType">
+	<sequence>
+		<element name="funcType" type="tns:funcType" minOccurs="1" maxOccurs="1" />
+	</sequence>
+</complexType>
+
+
+<complexType name="policiesType">
+  	<sequence>
+    	<element name="reachabilityPolicy" minOccurs="0" maxOccurs="unbounded" type="tns:reachPolType" ></element> 
+    	<element name="traversalPolicy" minOccurs="0" maxOccurs="unbounded"  type="tns:travPolType" ></element>
+   	</sequence>
+</complexType>
+
+
+<complexType name="reachPolType">
+	<sequence>
+		<element name="verificationResult"  minOccurs="0"  type="tns:verifResType"></element>
+		<element name="sourceNode"  type="tns:nameType"></element>
+    	<element name="destNode"  type="tns:nameType"></element>
+    </sequence>
+    <attribute name="policyName" use="required" type="tns:nameType"/>
+    <attribute name="relatedNffgName" use="required" type="tns:nameType"/>
+    <attribute name="isPositive" use="required" type="boolean"/>
+</complexType>
+
+
+<complexType name="travPolType">
+	<complexContent>
+		<extension base="tns:reachPolType">
+				<sequence>
+					<element name="traversedFunc" type="tns:funcType" maxOccurs="unbounded"></element>
+				</sequence>
+		</extension>
+	</complexContent>
+</complexType>
+
+
+<complexType name="verifResType">
+	<sequence>
+    	<element name="result" minOccurs="0" type="boolean"></element>
+    	<element name="verificationTime" minOccurs="0" type="dateTime"></element>
+    	<element name="message" minOccurs="0" type="string"></element>
+    </sequence>
+</complexType>
+
+
+<simpleType name="funcType">
+		<restriction base="string">
+    		<enumeration value="CACHE"></enumeration>
+   			<enumeration value="DPI"></enumeration>
+    		<enumeration value="FW"></enumeration>
+   			<enumeration value="MAIL_CLIENT"></enumeration>
+   			<enumeration value="MAIL_SERVER"></enumeration>
+			<enumeration value="NAT"></enumeration>
+   			<enumeration value="SPAM"></enumeration>
+			<enumeration value="VPN"></enumeration>
+			<enumeration value="WEB_CLIENT"></enumeration>
+			<enumeration value="WEB_SERVER"></enumeration>
+		</restriction>
+</simpleType>
+
+</schema>
