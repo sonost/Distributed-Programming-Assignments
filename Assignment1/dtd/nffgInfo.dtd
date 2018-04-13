@@ -1,0 +1,48 @@
+<!ELEMENT nffgService (nffgs)>
+<!ELEMENT nffgs (nffg+)>
+<!ELEMENT nffg (nodes,links,policies)>
+<!ELEMENT nodes (node+)>
+<!ELEMENT node (funcType)>
+<!ELEMENT links (link+)>
+<!ELEMENT link EMPTY>
+<!ELEMENT policies (policy+)>
+<!ELEMENT policy (reachabilityPolicy|traversalPolicy)>
+<!ELEMENT reachabilityPolicy (verificationResult?)>
+<!ELEMENT traversalPolicy (funcType+,verificationResult?)>
+<!ELEMENT funcType EMPTY>
+<!ELEMENT verificationResult EMPTY>
+
+
+<!ATTLIST nffg 
+	nffgName 	ID 		#REQUIRED
+	updateTime CDATA 	#REQUIRED>
+<!ATTLIST node
+	nodeName 	  		ID 		#REQUIRED>
+<!ATTLIST link
+	linkName 	ID 	#REQUIRED
+	sourceNode 	IDREF 	#REQUIRED
+	destNode 	IDREF   #REQUIRED>
+<!ATTLIST policy 
+	policyName    		ID 				#REQUIRED>
+<!ATTLIST reachabilityPolicy 
+	relatedNffgName    IDREF			#REQUIRED
+	sourceNode 	IDREF 	#REQUIRED
+	destNode 	IDREF   #REQUIRED
+	isPositive	(true|false)			#REQUIRED>
+<!ATTLIST traversalPolicy 
+	relatedNffgName    IDREF			#REQUIRED
+	sourceNode 	IDREF 	#REQUIRED
+	destNode 	IDREF   #REQUIRED
+	isPositive	(true|false)			#REQUIRED>
+ <!ATTLIST funcType 
+	nodeType (CACHE|DPI|FW|MAIL_CLIENT|MAIL_SERVER|NAT|SPAM|VPN|WEB_CLIENT|WEB_SERVER)	#REQUIRED>
+<!ATTLIST verificationResult 
+	result 					(true|false)		#REQUIRED
+	message 				CDATA  		 #IMPLIED
+	verificationTime 		CDATA 			#IMPLIED>
+	
+
+	
+	
+	
+	

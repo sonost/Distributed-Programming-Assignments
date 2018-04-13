@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nffgService SYSTEM "nffgInfo.dtd">
+<nffgService>
+	<nffgs>
+		<nffg nffgName="nffg1" updateTime="2015-10-15T11:32:40.000+02:00">
+			<nodes>
+				<node nodeName="firewall1">
+					<funcType nodeType = "FW"/>
+				</node>
+				
+				<node nodeName="webServer1">
+					<funcType nodeType = "NAT"/>
+				</node>
+			</nodes>
+			
+			<links>
+				<link linkName="l12" sourceNode="firewall1" destNode="webServer1"></link>
+			</links>
+			
+			<policies>
+				<policy policyName="policy4" >
+					<reachabilityPolicy relatedNffgName="nffg1" sourceNode="firewall1" destNode="webServer1"  isPositive="true">
+						<verificationResult result="true" message="policy result is true" verificationTime="2015-02-15T11:32:40.000+02:00"/>
+					</reachabilityPolicy>
+				</policy>
+			</policies>
+		</nffg>
+		
+	</nffgs>
+</nffgService>
+
+
