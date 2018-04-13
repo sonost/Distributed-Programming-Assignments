@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." name="NFFG_2_ant" default="generate-artifacts" >
+	<description>
+			Ant script for NFFG Assignment 2
+	</description>
+	<property name="PORT" value="9999" />
+	<property name="lab2.location" location="."/>
+	<property name="URL" value="http://localhost:${PORT}/Neo4JXML/rest"/>
+	<property name="WADL" value="${URL}/application.wadl"/>
+	<property name="lib.dir" location="${lab2.location}/lib"/>
+	<property name="custom.dir" location="${lab2.location}/custom" />
+	
+	<taskdef name="wjc" classname="org.jvnet.ws.wadl2java.WJCTask">
+	   <classpath>
+	   	<fileset dir="${lib.dir}" includes="*.jar" />
+	   </classpath>
+	</taskdef>
+	
+	<!-- define the client artifacts generation target -->
+	<target name="generate-artifacts">
+		<mkdir dir="${gen.dir}" />
+	   	<echo message="Compiling the descriptions..." />
+	   	<wjc description="${WADL}" package="it.polito.dp2.NFFG.sol2"
+	       autoSchemaPackage="false" target="${gen.dir}">
+	     <customizations dir="${custom.dir}" includes=".xjb"/>
+	     <depends dir="${lab2.location}" includes="sol_build.xml"/>
+	    </wjc>
+	</target>
+</project>
